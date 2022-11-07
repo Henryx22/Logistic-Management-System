@@ -66,6 +66,12 @@ http://127.0.0.1:8000
 ```
  email: admin@admin.com
  contraseña: admin
+
+ email: luis@email.com
+ contraseña: luis123
+
+ email: juan@email.com
+ contraseña: juan123
 ```
 
 # Como agregar producto para vender

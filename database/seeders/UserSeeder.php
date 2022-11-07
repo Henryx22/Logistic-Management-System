@@ -22,11 +22,28 @@ class UserSeeder extends Seeder
         //     'email' => "admin@admin.com",
         //     'password' => Hash::make('admin'),
         // ]);
-       $user = User::create([
+        $user1 = User::create([
             'name' => "Admin",
             'email' => "admin@admin.com",
+            'location' => "Cochabamba",
             'password' => Hash::make('admin'),
         ]);
-        $user->assignRole('super-admin');
+        $user1->assignRole('super-admin');
+
+        $user2 = User::create([
+            'name' => "Luis",
+            'email' => "luis@email.com",
+            'location' => "La Paz",
+            'password' => Hash::make('luis123'),
+        ]);
+        $user2->assignRole('oficial-de-despacho');
+
+        $user3 = User::create([
+            'name' => "Juan",
+            'email' => "juan@email.com",
+            'location' => "Oruro",
+            'password' => Hash::make('juan123'),
+        ]);
+        $user3->assignRole('cliente');
     }
 }
