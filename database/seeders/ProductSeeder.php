@@ -75,6 +75,7 @@ class ProductSeeder extends Seeder
             'user_id' => 1,
             'quantity' => 10,
             'total_price' => 200,
+            'status' => "Pendiente",
         ]);
     }
 }

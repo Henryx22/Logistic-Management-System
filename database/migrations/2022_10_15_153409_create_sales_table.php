@@ -19,6 +19,7 @@ class CreateSalesTable extends Migration
             $table->foreignId('user_id')->nullable()->constrained()->onDelete('cascade');
             $table->integer('quantity');
             $table->decimal('total_price');
+            $table->string('status');
             $table->softDeletes();
             $table->timestamps();
         });
