@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 07-11-2022 a las 23:23:59
+-- Tiempo de generación: 09-11-2022 a las 23:30:27
 -- Versión del servidor: 10.4.25-MariaDB
 -- Versión de PHP: 8.0.23
 
@@ -39,8 +39,8 @@ CREATE TABLE `categories` (
 --
 
 INSERT INTO `categories` (`id`, `name`, `created_at`, `updated_at`) VALUES
-(1, 'Electrodomestico', '2022-11-08 02:18:35', '2022-11-08 02:18:35'),
-(2, 'Electronica', '2022-11-08 02:18:35', '2022-11-08 02:18:35');
+(1, 'Electrodomestico', '2022-11-10 01:50:25', '2022-11-10 01:50:25'),
+(2, 'Electronica', '2022-11-10 01:50:25', '2022-11-10 01:50:25');
 
 -- --------------------------------------------------------
 
@@ -75,20 +75,20 @@ CREATE TABLE `migrations` (
 --
 
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
-(29, '2014_10_00_000000_create_settings_table', 1),
-(30, '2014_10_00_000001_add_group_column_on_settings_table', 1),
-(31, '2014_10_12_000000_create_users_table', 1),
-(32, '2014_10_12_100000_create_password_resets_table', 1),
-(33, '2019_08_19_000000_create_failed_jobs_table', 1),
-(34, '2019_12_14_000001_create_personal_access_tokens_table', 1),
-(35, '2022_02_08_163417_create_notifications_table', 1),
-(36, '2022_02_08_164147_create_permission_tables', 1),
-(37, '2022_02_09_140912_add_avatar_column_to_users_table', 1),
-(38, '2022_02_09_150108_create_suppliers_table', 1),
-(39, '2022_02_11_121758_create_categories_table', 1),
-(40, '2022_02_11_124140_create_purchases_table', 1),
-(41, '2022_02_17_150256_create_products_table', 1),
-(42, '2022_02_18_153409_create_sales_table', 1);
+(71, '2014_10_00_000000_create_settings_table', 1),
+(72, '2014_10_00_000001_add_group_column_on_settings_table', 1),
+(73, '2019_12_14_000001_create_personal_access_tokens_table', 1),
+(74, '2022_10_13_163407_create_users_table', 1),
+(75, '2022_10_13_163411_create_password_resets_table', 1),
+(76, '2022_10_13_163413_create_failed_jobs_table', 1),
+(77, '2022_10_13_163417_create_notifications_table', 1),
+(78, '2022_10_13_164147_create_permission_tables', 1),
+(79, '2022_10_14_140912_add_avatar_column_to_users_table', 1),
+(80, '2022_10_14_150108_create_suppliers_table', 1),
+(81, '2022_10_15_121758_create_categories_table', 1),
+(82, '2022_10_15_124140_create_purchases_table', 1),
+(83, '2022_10_15_150256_create_products_table', 1),
+(84, '2022_10_15_153409_create_sales_table', 1);
 
 -- --------------------------------------------------------
 
@@ -251,8 +251,8 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `purchase_id`, `price`, `discount`, `description`, `deleted_at`, `created_at`, `updated_at`) VALUES
-(1, 1, '20.00', '0.00', NULL, NULL, '2022-11-08 02:18:35', '2022-11-08 02:18:35'),
-(2, 2, '300.00', '0.00', NULL, NULL, '2022-11-08 02:18:35', '2022-11-08 02:18:35');
+(1, 1, '20.00', '0.00', NULL, NULL, '2022-11-10 01:50:25', '2022-11-10 01:50:25'),
+(2, 2, '300.00', '0.00', NULL, NULL, '2022-11-10 01:50:25', '2022-11-10 01:50:25');
 
 -- --------------------------------------------------------
 
@@ -278,8 +278,8 @@ CREATE TABLE `purchases` (
 --
 
 INSERT INTO `purchases` (`id`, `product`, `category_id`, `supplier_id`, `cost_price`, `quantity`, `expiry_date`, `image`, `created_at`, `updated_at`) VALUES
-(1, 'Batidora', 1, 1, '17.00', '400', NULL, NULL, '2022-11-08 02:18:35', '2022-11-08 02:18:35'),
-(2, 'Televisor', 2, 2, '280.00', '500', NULL, NULL, '2022-11-08 02:18:35', '2022-11-08 02:18:35');
+(1, 'Batidora', 1, 1, '17.00', '400', NULL, NULL, '2022-11-10 01:50:25', '2022-11-10 01:50:25'),
+(2, 'Televisor', 2, 2, '280.00', '500', NULL, NULL, '2022-11-10 01:50:25', '2022-11-10 01:50:25');
 
 -- --------------------------------------------------------
 
@@ -300,9 +300,9 @@ CREATE TABLE `roles` (
 --
 
 INSERT INTO `roles` (`id`, `name`, `guard_name`, `created_at`, `updated_at`) VALUES
-(1, 'cliente', 'web', '2022-11-08 02:18:34', '2022-11-08 02:18:34'),
-(2, 'oficial-de-despacho', 'web', '2022-11-08 02:18:34', '2022-11-08 02:18:34'),
-(3, 'super-admin', 'web', '2022-11-08 02:18:34', '2022-11-08 02:18:34');
+(1, 'cliente', 'web', '2022-11-10 01:50:24', '2022-11-10 01:50:24'),
+(2, 'oficial-de-despacho', 'web', '2022-11-10 01:50:24', '2022-11-10 01:50:24'),
+(3, 'super-admin', 'web', '2022-11-10 01:50:24', '2022-11-10 01:50:24');
 
 -- --------------------------------------------------------
 
@@ -378,6 +378,7 @@ CREATE TABLE `sales` (
   `user_id` bigint(20) UNSIGNED DEFAULT NULL,
   `quantity` int(11) NOT NULL,
   `total_price` decimal(8,2) NOT NULL,
+  `status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -387,8 +388,8 @@ CREATE TABLE `sales` (
 -- Volcado de datos para la tabla `sales`
 --
 
-INSERT INTO `sales` (`id`, `product_id`, `user_id`, `quantity`, `total_price`, `deleted_at`, `created_at`, `updated_at`) VALUES
-(1, 1, 1, 10, '200.00', NULL, '2022-11-08 02:18:35', '2022-11-08 02:18:35');
+INSERT INTO `sales` (`id`, `product_id`, `user_id`, `quantity`, `total_price`, `status`, `deleted_at`, `created_at`, `updated_at`) VALUES
+(1, 1, 1, 10, '200.00', 'Pendiente', NULL, '2022-11-10 01:50:25', '2022-11-10 01:50:25');
 
 -- --------------------------------------------------------
 
@@ -429,8 +430,8 @@ CREATE TABLE `suppliers` (
 --
 
 INSERT INTO `suppliers` (`id`, `name`, `email`, `phone`, `company`, `address`, `product`, `comment`, `created_at`, `updated_at`) VALUES
-(1, 'Bosch', NULL, NULL, NULL, NULL, NULL, NULL, '2022-11-08 02:18:35', '2022-11-08 02:18:35'),
-(2, 'LG', NULL, NULL, NULL, NULL, NULL, NULL, '2022-11-08 02:18:35', '2022-11-08 02:18:35');
+(1, 'Bosch', NULL, NULL, NULL, NULL, NULL, NULL, '2022-11-10 01:50:25', '2022-11-10 01:50:25'),
+(2, 'LG', NULL, NULL, NULL, NULL, NULL, NULL, '2022-11-10 01:50:25', '2022-11-10 01:50:25');
 
 -- --------------------------------------------------------
 
@@ -456,9 +457,9 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `location`, `remember_token`, `created_at`, `updated_at`, `avatar`) VALUES
-(1, 'Admin', 'admin@admin.com', NULL, '$2y$10$j7Y3HLZXN2P.0IfvTrA.P.vdk.1KSFoPLnzhY5FD32UD9FZzFhH1q', 'Cochabamba', NULL, '2022-11-08 02:18:34', '2022-11-08 02:18:34', NULL),
-(2, 'Luis', 'luis@email.com', NULL, '$2y$10$3KaVnasYi35ypaF/B3hE0.wTcFpYh2QSthuZEdC3sG8L7R.qObu5a', 'La Paz', NULL, '2022-11-08 02:18:34', '2022-11-08 02:18:34', NULL),
-(3, 'Juan', 'juan@email.com', NULL, '$2y$10$gHwGTeJsFuEy2Gl1l22UCe09RaaPHJjrEm52pONu3hnWCGy3LCV.O', 'Oruro', NULL, '2022-11-08 02:18:35', '2022-11-08 02:18:35', NULL);
+(1, 'Admin', 'admin@admin.com', NULL, '$2y$10$CH9gDPkei7R9LSS/JJokweH36Q0pWircgEigYjkp5CJ6bJ.EaD9Mi', 'Cochabamba', NULL, '2022-11-10 01:50:24', '2022-11-10 01:50:24', NULL),
+(2, 'Luis', 'luis@email.com', NULL, '$2y$10$lgkdCYZrVCbVDK9Ji/il/ujsOYhZfgRhQjvqcoytXwafuu4dlj9Ru', 'La Paz', NULL, '2022-11-10 01:50:24', '2022-11-10 01:50:24', NULL),
+(3, 'Juan', 'juan@email.com', NULL, '$2y$10$wzKnkM5w8ilHBZndCyOlVut4ix.KMxGXSfrTnbeouHx/0egJqX4zO', 'Oruro', NULL, '2022-11-10 01:50:25', '2022-11-10 01:50:25', NULL);
 
 --
 -- Índices para tablas volcadas
@@ -601,7 +602,7 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT de la tabla `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=85;
 
 --
 -- AUTO_INCREMENT de la tabla `permissions`

@@ -8,14 +8,14 @@
 
 @push('page-header')
 <div class="col-sm-7 col-auto">
-	<h3 class="page-title">Purchase</h3>
+	<h3 class="page-title">Compras a Proveedores</h3>
 	<ul class="breadcrumb">
-		<li class="breadcrumb-item"><a href="{{route('dashboard')}}">Dashboard</a></li>
-		<li class="breadcrumb-item active">Purchase</li>
+		<li class="breadcrumb-item"><a href="{{route('dashboard')}}">Panel de Control</a></li>
+		<li class="breadcrumb-item active">Compras a Proveedores</li>
 	</ul>
 </div>
 <div class="col-sm-5 col">
-	<a href="{{route('purchases.create')}}" class="btn btn-primary float-right mt-2">Add New</a>
+	<a href="{{route('purchases.create')}}" class="btn btn-primary float-right mt-2">Crear nueva compra</a>
 </div>
 @endpush
 
@@ -23,19 +23,19 @@
 <div class="row">
 	<div class="col-md-12">
 	
-		<!-- Recent Orders -->
+		<!-- Adquisiciones Recientes -->
 		<div class="card">
 			<div class="card-body">
 				<div class="table-responsive">
 					<table id="purchase-table" class="datatable table table-hover table-center mb-0">
 						<thead>
 							<tr>
-								<th>Medicine Name</th>
-								<th>Category</th>
-								<th>Supplier</th>
-								<th>Purchase Cost</th>
-								<th>Quantity</th>
-								<th>Expire Date</th>
+								<th>Nombre de Producto</th>
+								<th>Categoria</th>
+								<th>Proveedor</th>
+								<th>Precio de Compra</th>
+								<th>Cantidad</th>
+							<!--	<th>Expire Date</th>	-->
 								<th class="action-btn">Action</th>
 							</tr>
 						</thead>
@@ -46,7 +46,7 @@
 				</div>
 			</div>
 		</div>
-		<!-- /Recent Orders -->
+		<!-- /Adquisiciones Recientes -->
 		
 	</div>
 </div>
@@ -65,7 +65,7 @@
                 {data: 'supplier', name: 'supplier'},
                 {data: 'cost_price', name: 'cost_price'},
                 {data: 'quantity', name: 'quantity'},
-				{data: 'expiry_date', name: 'expiry_date'},
+				//{data: 'expiry_date', name: 'expiry_date'},
                 {data: 'action', name: 'action', orderable: false, searchable: false},
             ]
         });
