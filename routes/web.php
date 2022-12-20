@@ -59,7 +59,8 @@ Route::middleware(['auth'])->prefix('admin')->group(function(){
     
     Route::get('delivery/index',[DeliveryController::class,'index'])->name('delivery.index');
     Route::get('delivery/processed',[DeliveryController::class,'indexProcessed'])->name('delivery.processed');
-    //Route::get('delivery/reports',[DeliveryController::class,'index'])->name('delivery.report');
+    Route::get('delivery/reports',[DeliveryController::class,'reports'])->name('delivery.report');
+    Route::post('delivery/reports',[DeliveryController::class,'generateReport']);
     //Route::get('genSale',[DeliveryController::class,'generateSales'])->name('genSale');
 
 

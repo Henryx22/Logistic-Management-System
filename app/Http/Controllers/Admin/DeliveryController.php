@@ -214,8 +214,8 @@ class DeliveryController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function reports(Request $request){
-        $title = 'sales reports';
-        return view('admin.sales.reports',compact(
+        $title = 'deliveries reports';
+        return view('admin.delivery.reports',compact(
             'title'
         ));
     }
@@ -227,14 +227,16 @@ class DeliveryController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function generateReport(Request $request){
+        /**
         $this->validate($request,[
             'from_date' => 'required',
             'to_date' => 'required',
         ]);
-        $title = 'sales reports';
-        $sales = Sale::whereBetween(DB::raw('DATE(created_at)'), array($request->from_date, $request->to_date))->get();
-        return view('admin.sales.reports',compact(
-            'sales','title'
+        */
+        $title = 'deliveries reports';
+        $deliveries = Delivery::get();
+        return view('admin.delivery.reports',compact(
+            'deliveries','title'
         ));
     }
 
@@ -257,6 +259,9 @@ class DeliveryController extends Controller
             $sales = Sale::get();
             return DataTables::of($sales)
                     ->addIndexColumn()
+                    ->addColumn('id',function($sale){                   
+                        return ' '.$sale->id;
+                    })
                     ->addColumn('product',function($sale){
                         $image = '';
                         if(!empty($sale->product)){
@@ -326,10 +331,12 @@ class DeliveryController extends Controller
 
         $title = 'deliveries';
         if($request->ajax()){
-            $sales = Delivery::latest();
+            $sales = Delivery::get();
             return DataTables::of($sales)
                     ->addIndexColumn()
-                    
+                    ->addColumn('id',function($sale){                   
+                        return ' '. $sale->id;
+                    })
                     ->addColumn('day',function($sale){                   
                         return ' '. $sale->day;
                     })
@@ -404,7 +411,7 @@ class DeliveryController extends Controller
         $cpH;   //$quantityPH;   
         $np=0;    //$workersPH;
         $cmt = 30;
-        $scap=0;  //acumulado horas fuera de trabajo  
+        //$scap=0;  //acumulado horas fuera de trabajo  
         
         $prog=0;  //$progressPH;   
         $sales = Sale::get();

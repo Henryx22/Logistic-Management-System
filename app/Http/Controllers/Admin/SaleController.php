@@ -24,9 +24,12 @@ class SaleController extends Controller
     {
         $title = 'sales';
         if($request->ajax()){
-            $sales = Sale::latest();
+            $sales = Sale::get();
             return DataTables::of($sales)
                     ->addIndexColumn()
+                    ->addColumn('id',function($sale){                   
+                        return ' '.$sale->id;
+                    })
                     ->addColumn('product',function($sale){
                         $image = '';
                         if(!empty($sale->product)){

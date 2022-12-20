@@ -33,6 +33,7 @@
 					<table id="sales-table" class="datatable table table-hover table-center mb-0">
 						<thead>
 							<tr>
+								<th>Id</th>
 								<th>Dia</th>
 								<th>Hora</th>
 								<th>Pedidos x Hora</th>
@@ -66,6 +67,7 @@
             serverSide: true,
             ajax: "{{route('delivery.processed')}}",
             columns: [
+                {data: 'id', name: 'id'},
                 {data: 'day', name: 'day'},
                 {data: 'time', name: 'time'},
                 {data: 'deliveriesPH', name: 'deliveriesPH'},

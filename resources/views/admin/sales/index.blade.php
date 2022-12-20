@@ -32,10 +32,11 @@
 					<table id="sales-table" class="datatable table table-hover table-center mb-0">
 						<thead>
 							<tr>
+								<th>Id</th>
 								<th>Nombre de Producto</th>
 								<th>Cantidad</th>
 								<th>Precio Total</th>
-								<th>Fecha</th>
+							<!--	<th>Fecha</th>	-->
 								<th class="action-btn">Accion</th>
 							</tr>
 						</thead>
@@ -62,11 +63,12 @@
             serverSide: true,
             ajax: "{{route('sales.index')}}",
             columns: [
+                {data: 'id', name: 'id'},
                 {data: 'product', name: 'product'},
                 {data: 'quantity', name: 'quantity'},
                 {data: 'total_price', name: 'total_price'},
-				{data: 'date', name: 'date'},
-                {data: 'action', name: 'action', orderable: false, searchable: false},
+				//{data: 'date', name: 'date'},
+                {data: 'action', name: 'action', orderable: true, searchable: true},
             ]
         });
         

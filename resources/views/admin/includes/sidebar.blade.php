@@ -16,13 +16,11 @@
 					<a href="#"><i class="fe fe-activity"></i> <span> Entregas</span> <span class="menu-arrow"></span></a>
 					<ul style="display: none;">
 						<li><a class="{{ route_is('delivery.index') ? 'active' : '' }}" href="{{route('delivery.index')}}">Lista de Pedidos</a></li>
-					</ul>
-					<ul style="display: none;">
 						<li><a class="{{ route_is('delivery.processed') ? 'active' : '' }}" href="{{route('delivery.processed')}}">Procesamiento de Pedidos</a></li>
+						<li><a class="{{ route_is('delivery.report') ? 'active' : '' }}" href="{{route('delivery.report')}}">Reporte de Procesamiento</a></li>
+					
 					</ul>
-					<ul style="display: none;">
-						<li><a class="{{ route_is('delivery.*') ? 'active' : '' }}" href="{{route('delivery.index')}}">Reporte de Procesamiento</a></li>
-					</ul>
+						
 				</li>
 				@endcan
 				

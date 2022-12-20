@@ -9,10 +9,10 @@
 
 @push('page-header')
 <div class="col-sm-7 col-auto">
-	<h3 class="page-title">Reporte de Ventas</h3>
+	<h3 class="page-title">Reporte de Procesado de Pedidos</h3>
 	<ul class="breadcrumb">
 		<li class="breadcrumb-item"><a href="{{route('dashboard')}}">Panel de Control</a></li>
-		<li class="breadcrumb-item active">Generar Reporte de Ventas</li>
+		<li class="breadcrumb-item active">Generar Reporte de Procesado de Pedidos</li>
 	</ul>
 </div>
 <div class="col-sm-5 col">
@@ -24,7 +24,7 @@
 <div class="row">
 	<div class="col-md-12">
 	
-		@isset($sales)
+		@isset($deliveries)
             <!--  Reporte de Ventas -->
             <div class="card">
                 <div class="card-body">
@@ -32,30 +32,32 @@
                         <table id="sales-table" class="datatable table table-hover table-center mb-0">
                             <thead>
                                 <tr>
-                                    <th>Nombre de Producto</th>
-                                    <th>Cantidad</th>
-                                    <th>Precio Total</th>
-                                    <th>Fecha</th>
+                                	<th>Id</th>
+									<th>Dia</th>
+									<th>Hora</th>
+									<th>Pedidos x Hora</th>
+									<th>Cantidad x Hora</th>
+									<th>Procesado x Hora</th>
+									<th>Avance</th>
+									<th>Trabajadores x Hora</th>
+
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($sales as $sale)
-                                    @if (!(empty($sale->product->purchase)))
+                                @foreach ($deliveries as $de)
+                                <!--    @if (!(empty($de->product->purchase)))	-->
                                         <tr>
-                                            <td>
-                                                {{$sale->product->purchase->product}}
-                                                @if (!empty($sale->product->purchase->image))
-                                                    <span class="avatar avatar-sm mr-2">
-                                                    <img class="avatar-img" src="{{asset("storage/purchases/".$sale->product->purchase->image)}}" alt="image">
-                                                    </span>
-                                                @endif
-                                            </td>
-                                            <td>{{$sale->quantity}}</td>
-                                            <td>{{AppSettings::get('app_currency', '$')}} {{($sale->total_price)}}</td>
-                                            <td>{{date_format(date_create($sale->created_at),"d M, Y")}}</td>
+                                            <td>{{$de->id}}</td>
+                                            <td>{{$de->day}}</td>
+                                            <td>{{$de->time}}</td>
+                                            <td>{{$de->deliveriesPH}}</td>
+                                            <td>{{$de->quantityPH}}</td>
+                                            <td>{{$de->solvedPH}}</td>
+                                            <td>{{$de->progressPH}}</td>
+                                            <td>{{$de->workersPH}}</td>
                                             
                                         </tr>
-                                    @endif
+                                <!--    @endif	-->
                                 @endforeach
                             </tbody>
                         </table>
@@ -80,8 +82,9 @@
 				</button>
 			</div>
 			<div class="modal-body">
-				<form method="post" action="{{route('sales.report')}}">
+				<form method="post" action="{{route('delivery.report')}}">
 					@csrf
+				<!--	
 					<div class="row form-row">
 						<div class="col-12">
 							<div class="row">
@@ -100,6 +103,7 @@
 							</div>
 						</div>
 					</div>
+				-->
 					<button type="submit" class="btn btn-primary btn-block submit_report">Enviar</button>
 				</form>
 			</div>
@@ -112,7 +116,7 @@
 @push('page-js')
 <script>
     $(document).ready(function(){
-        $('#sales-table').DataTable({
+        $('#deliveries-table').DataTable({
 			dom: 'Bfrtip',		
 			buttons: [
 				{
