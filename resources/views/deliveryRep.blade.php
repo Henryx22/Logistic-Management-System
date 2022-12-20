@@ -36,6 +36,11 @@
 </head>
 <body>
 
+<a href="{{ route('ini') }}" class="btn btn-danger float-right mt-2">Regresar</a>
+    
+<div class="col-sm-5 col">
+        <h3 class="float-right mt-2">Reporte de Procesado de Pedidos</h3>
+</div>
     <!-- Main Wrapper -->
     <div class="main-wrapper login-body">
         <!-- Page Wrapper -->
@@ -44,102 +49,98 @@
             <div class="container">
                 
                 @yield('content')
-                <div class="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center py-4 sm:pt-0">
-        
-                    @if (Route::has('login'))
-                        <div class="hidden fixed top-0 rigth-0 px-6 py-4 sm:block">
-                            @auth
-                                <a href="{{ url('/admin/dashboard') }}" class="btn btn-primary">Home</a>
-                            @else
-                                <a href="{{ route('login') }}" class="btn btn-primary">Log in</a>
-
-                                @if (Route::has('register'))
-                                    <a href="{{ route('register') }}" class="btn btn-primary">Register</a>
-                                @endif
-                            @endauth
-                        </div>
-                    @endif
-                </div>
-                <div class="loginbox">
-                                    
-                        <img class="login-left img-fluid" src="@if(!empty(AppSettings::get('logo'))) {{asset('storage/'.AppSettings::get('logo'))}} @else{{asset('assets/img/logo-welcome.png')}} @endif" alt="Logo">
-                        
+                <div class="row">
+                    <div class="col-md-12">
                     
-                    <div class="login-rigth">
-                                    <div class="p-2">
-                                        <div class="flex items-center">
-                                            
-                                            <div class="ml-4 text-lg leading-7 font-semibold"><a href="#generate_sale" data-toggle="modal" class="btn btn-primary ">Generar Ventas</a></div>
-                                            
-                                        </div>
+                        @isset($deliveries)
+                            <!--  Reporte de Procesado de pedidos -->
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table id="deliveries-table" class="datatable table table-hover table-center mb-0">
+                                            <thead>
+                                                <tr>
+                                                    <th>Id</th>
+                                                    <th>Dia</th>
+                                                    <th>Hora</th>
+                                                    <th>Pedido x Hr</th>
+                                                    <th>Cantidad x Hr</th>
+                                                    <th>Procesado x Hr</th>
+                                                    <th>Avance</th>
+                                                    <th>Trab x Hr</th>
+                                                    <th>Salario</th>
 
-                                        <div class="ml-6">
-                                            <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
-                                                Generar Ventas aleatorias automaticamente
-                                            </div>
-                                        </div>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach($deliveries as $delivery)
+                                                    @if (!(empty($delivery)))   
+                                                        <tr>
+                                                            <td>{{$delivery->id}}</td>
+                                                            <td>{{$delivery->day}}</td>
+                                                            <td>{{$delivery->time}}</td>
+                                                            <td>{{$delivery->deliveriesPH}}</td>
+                                                            <td>{{$delivery->quantityPH}}</td>
+                                                            <td>{{$delivery->solvedPH}}</td>
+                                                            <td>{{$delivery->progressPH}}</td>
+                                                            <td>{{$delivery->workersPH}}</td>
+                                                            <td>{{$delivery->salaryPH}}</td>
+                                                            
+                                                        </tr>
+                                                    @endif  
+                                                @endforeach
+                                            </tbody>
+                                        </table>
                                     </div>
-
-                                    <div class="p-2">
-                                        <div class="flex items-center">
-                                            
-                                            <div class="ml-4 text-lg leading-7 font-semibold"><a href="{{ route('procSale') }}" class="btn btn-primary ">Procesar Pedidos</a></div>
-                                        </div>
-
-                                        <div class="ml-6">
-                                            <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
-                                                Generar la cantidad de personal requerido para el procesamiento de los pedidos
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="p-2">
-                                        <div class="flex items-center">
-                                            
-                                            <div class="ml-4 text-lg leading-7 font-semibold"><a href="{{ route('delivRep') }}" class="btn btn-primary ">Generar Reporte</a></div>
-                                        </div>
-
-                                        <div class="ml-6">
-                                            <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
-                                                Reporte de personal destinado para procesamiento
-                                            </div>
-                                        </div>
-                                    </div>    
-                    </div>
+                                </div>
+                            </div>
+                            <!-- / Reporte de procesado de pedidos -->
+                        @endisset
+                       
                         
-                </div>
-                
-                <div class="modal fade" id="generate_sale" aria-hidden="true" role="dialog">
-                    <div class="modal-dialog modal-dialog-centered" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title">Generar Ventas</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <form method="post" action="{{ route('genSale') }}">
-                                    @csrf
-                                    <div class="row form-row">
-                                        <div class="col-12">
-                                            <div class="row">
-                                                                    
-                                                <div class="col-6">
-                                                    <div class="form-group">
-                                                        <label>Numero de dias a simular </label>
-                                                        <input type="number" name="numDays" class="form-control">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <button type="submit" class="btn btn-primary btn-block submit_report">Enviar</button>
-                                </form>
-                            </div>
-                        </div>
                     </div>
                 </div>
+
+                <script>
+                    $(document).ready(function(){
+                        $('#deliveries-table').DataTable({
+                            dom: 'Bfrtip',      
+                            buttons: [
+                                {
+                                extend: 'collection',
+                                text: 'Export Data',
+                                buttons: [
+                                    {
+                                        extend: 'pdf',
+                                        exportOptions: {
+                                            columns: "thead th:not(.action-btn)"
+                                        }
+                                    },
+                                    {
+                                        extend: 'excel',
+                                        exportOptions: {
+                                            columns: "thead th:not(.action-btn)"
+                                        }
+                                    },
+                                    {
+                                        extend: 'csv',
+                                        exportOptions: {
+                                            columns: "thead th:not(.action-btn)"
+                                        }
+                                    },
+                                    {
+                                        extend: 'print',
+                                        exportOptions: {
+                                            columns: "thead th:not(.action-btn)"
+                                        }
+                                    }
+                                ]
+                                }
+                            ]
+                        });
+                    });
+                </script>
+
 
                 <!-- add sales modal-->
                 <x-modals.add-sale />
@@ -252,6 +253,7 @@
         }
     @endif
 </script>
+
 <!-- Page JS -->
 @stack('page-js')
 </html>

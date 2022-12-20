@@ -22,6 +22,7 @@ class CreateDeliveriesTable extends Migration
             $table->integer('solvedPH');
             $table->integer('progressPH');
             $table->integer('workersPH');
+            $table->integer('salaryPH');
             $table->softDeletes();
             $table->timestamps();    
         });

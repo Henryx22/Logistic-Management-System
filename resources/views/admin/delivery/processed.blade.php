@@ -29,12 +29,12 @@
 								<th>Id</th>
 								<th>Dia</th>
 								<th>Hora</th>
-								<th>Pedidos x Hora</th>
-								<th>Cantidad x Hora</th>
-								<th>Procesado x Hora</th>
+								<th>Pedido x Hr</th>
+								<th>Cantidad x Hr</th>
+								<th>Procesado x Hr</th>
 								<th>Avance</th>
-								<th>Trabajadores x Hora</th>
-
+								<th>Trab x Hr</th>
+								<th>Salario</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -68,7 +68,7 @@
                 {data: 'solvedPH', name: 'solvedPH'},
                 {data: 'progressPH', name: 'progressPH'},
                 {data: 'workersPH', name: 'workersPH'},
-
+                {data: 'salaryPH', name: 'salaryPH'},
             ]
         });
         

@@ -20,11 +20,13 @@ class DeliveryController extends Controller
 {
     
     /**
-     * Generate sales reports index
+     * Generar pagina inicial para reporte de pedidos procesados
      *
      * @return \Illuminate\Http\Response
      */
+
     public function reports(Request $request){
+    
         $title = 'deliveries reports';
         return view('admin.delivery.reports',compact(
             'title'
@@ -32,7 +34,7 @@ class DeliveryController extends Controller
     }
 
     /**
-     * Generate sales report form post
+     * Generar reporte de Pedidos procesados desde post
      *
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
@@ -49,18 +51,26 @@ class DeliveryController extends Controller
         ));
     }
 
-
     /**
-     * Remove the specified resource from storage.
+     * Generar reporte de Pedidos procesados desde post de pantalla inicial
      *
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request)
-    {
-        return Sale::findOrFail($request->id)->delete();
+    public function genRep(Request $request){
+        
+        $title = 'deliveries reports';
+        $deliveries = Delivery::get();
+        return view('deliveryRep',compact(
+            'deliveries','title'
+        ));
     }
 
+    /**
+     * Generar Pagina inicial de listado de pedidos recibidos
+     *
+     * 
+     */
     public function index(Request $request)
     {
         $title = 'deliveries';
@@ -93,20 +103,6 @@ class DeliveryController extends Controller
                     ->addColumn('date_down',function($row){
                         return date_format(date_create($row->updated_at),'d M, Y');
                     })
-                /**    
-                    ->addColumn('action', function ($row) {
-                        $editbtn = '<a href="'.route("sales.edit", $row->id).'" class="editbtn"><button class="btn btn-primary"><i class="fas fa-edit"></i></button></a>';
-                        $deletebtn = '<a data-id="'.$row->id.'" data-route="'.route('sales.destroy', $row->id).'" href="javascript:void(0)" id="deletebtn"><button class="btn btn-danger"><i class="fas fa-trash"></i></button></a>';
-                        if (!auth()->user()->hasPermissionTo('edit-sale')) {
-                            $editbtn = '';
-                        }
-                        if (!auth()->user()->hasPermissionTo('destroy-sale')) {
-                            $deletebtn = '';
-                        }
-                        $btn = $editbtn.' '.$deletebtn;
-                        return $btn;
-                    })
-                */    
                     ->rawColumns(['product','action'])
                     ->make(true);
 
@@ -117,9 +113,16 @@ class DeliveryController extends Controller
         ));
     }
 
+    /**
+     * Generar listado de Pedidos Procesados
+     *
+     * 
+     */
     public function indexProcessed(Request $request)
     {
+        //llamamos al metodo que procesa los pedidos y los agrega a la base de datos
         app(DeliveryController::class)->processDeliv($request);
+
 
         $title = 'deliveries';
         if($request->ajax()){
@@ -153,6 +156,9 @@ class DeliveryController extends Controller
                     ->addColumn('workersPH',function($sale){                   
                         return ' '. $sale->workersPH;
                     })
+                    ->addColumn('salaryPH',function($sale){                   
+                        return ' '. $sale->salaryPH;
+                    })
                     
                     ->rawColumns(['product','action'])
                     ->make(true);
@@ -164,6 +170,13 @@ class DeliveryController extends Controller
         ));
     }
 
+    /**
+     * Generar Ventas de forma automatica para las 24 horas del dia
+     * para lo cual se pide la cantidad de dias que se desea generar
+     * (tomese en cuenta que los dias siguen el orden 
+     *  Sabado,domingo,Lunes,Martes,Miercoles,Jueves,Viernes
+     * )
+     */
     public function generateSales(Request $request)
     {
         $this->validate($request,[
@@ -175,38 +188,49 @@ class DeliveryController extends Controller
         return view('welcome');
     }
         
+    /**
+    *  Metodo de procesamiento de pedidos, calculando la cantidad 
+    *  de personal necesario 
+    */
     public function processDeliv(Request $request)
     {
         Delivery::truncate();
 
         $aux;
-        $day=1;
-        $hr=8;
+        $day=1;     // contador de dia de la semana tomando el valor 
+                    // de 1 como Sabado y asi sucesivamente 
+
+        $hr=8;  //numero de horas de trabajo
 
         $ci=0;    //$deliveriesPH;    
         $cpr=0;   //$solvedPH;   
         $cpH;   //$quantityPH;   
         $np=0;    //$workersPH;
         $cmt = 30;
-        //$scap=0;  //acumulado horas fuera de trabajo  
         
-        $prog=0;  //$progressPH;   
+        $prog=0;  //$progressPH;
+        $salary=0;   
         $sales = Sale::get();
 
-        $i=1;
+        $i=1;   // contador de horas del dia 1,2...24
+
             foreach ($sales as $sale) {
                 $cph = $sale->quantity;
             
-                //si hora entre 01 a 04
+                //si hora entre 01 a 04 
                 if($i<5){
-                    $prog=$prog+$cph;
+                    $prog=$prog+$cph;   //se suma la cantidad entrante x hr al progreso total
                     $ci=$prog;
                     
                 }else{
                     if($i==5){
                         $ci=$prog+$cph;
 
-                        if ($day>2) {
+                        //se verifica si es dia laboral normal
+                        if ($day>2) {       
+
+                            // se verifica si los pedidos pendientes son mayores a 1000
+                            // para asignar personal de emergencia en horas extra
                             if($ci>1000){
                                 $aux = ($ci)/$hr;
                                 $hr=$hr-1;
@@ -216,14 +240,21 @@ class DeliveryController extends Controller
                                 }else{
                                     $np = ceil($aux/$cmt);    //redondeo a parte superior
                                 }
-                            }    
+                            }
+                            $salary=$np*50;     //se paga 50 bs por hora extra a cada trabajador 
                         }
                                                     
                     }else{
+
+                        // se procesa el personal necesario para horas extra 
                         if ($i<8){
                             $ci = $cph;
 
+                            //se verifica si es dia laboral normal
                             if($day>2){
+                            
+                                // se verifica si los pedidos pendientes son mayores a 1000
+                                // para asignar personal de emergencia en horas extra
                                 if(($prog+$ci)>1000){
                                     $aux = ($prog + $ci)/$hr;
                                     $hr=$hr-1;
@@ -234,6 +265,7 @@ class DeliveryController extends Controller
                                         $np = ceil($aux/$cmt);    //redondeo a parte superior
                                     }
                                 }
+                                $salary=$np*50;    //se paga 50 bs por hora extra
                             }
 
                         }else{
@@ -242,9 +274,14 @@ class DeliveryController extends Controller
                                 $ci=$cph;
                                         
                                 if ($i==8){
-                                            
+                                    
+                                    // se verifica si los pedidos pendientes son mayores a 3000
+                                    // en dias Sabado y Domingo, o si es dia laboral normal
+                                    // para asignar el personal necesario       
                                     if((($day==1)&&($prog>3000))||(($day==2)&&($prog>3000))||($day>2)){
-                                
+                                        
+                                        // se procesa el personal necesario 
+                                        // para la jornada laboral
                                         if(($prog+$ci)>0){
                                             $aux = ($prog + $ci)/$hr;
                                             $hr=$hr-1;
@@ -258,8 +295,17 @@ class DeliveryController extends Controller
                                     }else{
                                         $np=0;
                                     }
+
+                                    if($day>2) {
+                                        $salary=$np*100;    //se paga 100 bs por hora en dia normal
+                                    }else{
+                                        $salary=$np*200;    //se paga 200 bs por hora en sabado y domingo
+                                    }
                                 }
                             }else{
+
+                                // si hora == 13 se reestablece el contador de personal
+                                // dedido a la hora de descanso o almuerzo
                                 if ($i==13) {
                                     if ($np>0) {
                                         $ci=$ci+$cph;
@@ -267,12 +313,18 @@ class DeliveryController extends Controller
                                     }else{
                                         $ci=$cph;
                                     }
+                                    $salary=0;
                                     
                                 }else{
                                     if (($i>13)&&($i<22)) {
                                         $ci=$cph;
 
                                         if ($i==14) {
+
+                                            // se verifica si los pedidos pendientes son mayores a 3000
+                                            // en dias Sabado y Domingo, o si es dia laboral normal
+                                            // para asignar el personal necesario       
+                                    
                                             if((($day==1)&&($prog>3000))||(($day==2)&&($prog>3000))||($day>2)){
                                                 if(($prog+$ci)>0){
                                                     $hr=3;
@@ -288,6 +340,11 @@ class DeliveryController extends Controller
                                         }
 
                                         if ($i==17) {
+
+                                            // se verifica si los pedidos pendientes son mayores a 3000
+                                            // en dias Sabado y Domingo, o si es dia laboral normal
+                                            // para asignar el personal necesario 
+                                            // para la ultima hora antes de la hora de entrega    
                                             if((($day==1)&&($prog>3000))||(($day==2)&&($prog>3000))||($day>2)){
                                                 if(($prog+$ci)>0){
                                                     $hr=1;
@@ -303,11 +360,26 @@ class DeliveryController extends Controller
                                             }
                                         }
 
+                                        // si hora == 18 se reestablece el contador de personal
+                                        // dedido a la hora de despacho de pedidos
                                         if ($i==18) {
                                             $np=0;
+                                        }
+
+                                        if (($i>13)&&($i<19)) {
+                                            if($day>2) {
+                                                $salary=$np*100;    //se paga 100 bs por hora en dia normal
+                                            }else{
+                                                $salary=$np*200;    //se paga 200 bs por hora en sabado y domingo
+                                            }
                                         }                 
 
                                         if (($i>18)&&($i<22)) {
+
+                                            // se verifica si el dia de trabajo es Lunes o Viernes
+                                            // para asignar personal de emergencia en horas extra
+                                            // para reducir la cantidad de pedidos de manera tolerable
+                                
                                             if (($day==3)||($day==7)) {
                                                 if ($i==19) {
                                                     if(($prog+$ci)>0){
@@ -318,19 +390,28 @@ class DeliveryController extends Controller
                                                                 
                                                     }    
                                                 }
-                                            }                       
+                                            }
+
+                                            $salary=$np*50;    //se paga 50 bs por hora extra
+                                                                   
                                         }
 
                                     }else{
+                                    
+                                        // si (hora > 21) && (hora <= 24) se reestablece el 
+                                        // contador de personal dedido a las horas sin atencion
                                         $np=0;
+                                        $salary=0;
                                     }
                                 }
                             }    
                         }
                     }
 
+                    // se calcula los pedidos procesados por hora
                     $cpr = $ci - ($np*$cmt);
 
+                    // se actualiza el progreso de pedidos pendientes
                     if(($prog+$cpr)>0){
                         
                         if ($i==5) {
@@ -343,6 +424,8 @@ class DeliveryController extends Controller
                     }
                 }
 
+            // se convierte los valores de dia a su significado 
+            // para agregarlos a la base de datos
             $dayText="";
 
             if($day==1){
@@ -373,6 +456,7 @@ class DeliveryController extends Controller
                     }
                 }
 
+            // se carga los datos obtenidos a la tabla Delivery
             Delivery::create([
                 
                 'day'=>$dayText,
@@ -382,8 +466,11 @@ class DeliveryController extends Controller
                 'solvedPH'=>$cpr,
                 'progressPH'=>$prog,
                 'workersPH'=>$np,
+                'salaryPH'=>$salary,
             ]);
             
+                // se controla el incremento de las variables
+                // de control de dia y hora
                 if($i==24){
                     $i=1;
                     $hr=8;
@@ -402,7 +489,11 @@ class DeliveryController extends Controller
         
         
     }
-
+    
+    /**
+    *  Procesamiento de pedidos desde pantalla inicial 
+    *  sin necesidad de inicio de sesion
+    */
     public function processDelivery(Request $request)
     {
         app(DeliveryController::class)->processDeliv($request);

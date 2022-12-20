@@ -11,7 +11,7 @@ class Delivery extends Model
     use HasFactory,SoftDeletes;
 
     protected $fillable = [
-        'day','time','deliveriesPH','quantityPH','solvedPH','progressPH','workersPH'
+        'day','time','deliveriesPH','quantityPH','solvedPH','progressPH','workersPH','salaryPH'
     ];
 
 }

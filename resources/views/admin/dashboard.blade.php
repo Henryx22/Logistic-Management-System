@@ -26,7 +26,7 @@
                         <i class="fe fe-money"></i>
                     </span>
                     <div class="dash-count">
-                        <h3>{{AppSettings::get('app_currency', '$')}} {{$today_sales}}</h3>
+                        <h3>{{AppSettings::get('app_currency', '$')}} {{$total_sales}}</h3>
                     </div>
                 </div>
                 <div class="dash-widget-info">
@@ -39,6 +39,26 @@
         </div>
     </div>
     @endcan
+    <div class="col-xl-3 col-sm-6 col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="dash-widget-header">
+                    <span class="dash-widget-icon text-danger border-danger">
+                        <i class="fe fe-money"></i>
+                    </span>
+                    <div class="dash-count">
+                        <h3>{{AppSettings::get('app_currency', '$')}} {{$total_salary}}</h3>
+                    </div>
+                </div>
+                <div class="dash-widget-info">
+                    <h6 class="text-muted">Salario Trabajadores</h6>
+                    <div class="progress progress-sm">
+                        <div class="progress-bar bg-danger w-50"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="col-xl-3 col-sm-6 col-12">
         <div class="card">
             <div class="card-body">
@@ -60,29 +80,6 @@
             </div>
         </div>
     </div>
-    @can('view-expired')
-    <div class="col-xl-3 col-sm-6 col-12">
-        <div class="card">
-            <div class="card-body">
-                <div class="dash-widget-header">
-                    <span class="dash-widget-icon text-danger border-danger">
-                        <i class="fe fe-folder"></i>
-                    </span>
-                    <div class="dash-count">
-                        <h3>{{$total_expired_products}}</h3>
-                    </div>
-                </div>
-                <div class="dash-widget-info">
-                    
-                    <h6 class="text-muted">Productos expirados</h6>
-                    <div class="progress progress-sm">
-                        <div class="progress-bar bg-danger w-50"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    @endcan
     @can('view-users')
     <div class="col-xl-3 col-sm-6 col-12">
         <div class="card">
@@ -119,6 +116,7 @@
                     <table id="sales-table" class="datatable table table-hover table-center mb-0">
                         <thead>
                             <tr>
+                                <th>Id</th>
                                 <th>Producto</th>
                                 <th>Cantidad</th>
                                 <th>Precio Total</th>
@@ -165,10 +163,11 @@
             serverSide: true,
             ajax: "{{route('sales.index')}}",
             columns: [
+                {data: 'id', name: 'id'},
                 {data: 'product', name: 'product'},
                 {data: 'quantity', name: 'quantity'},
                 {data: 'total_price', name: 'total_price'},
-				{data: 'date', name: 'date'},
+				//{data: 'date', name: 'date'},
             ]
         });
         
