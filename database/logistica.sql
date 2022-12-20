@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 09-11-2022 a las 23:30:27
+-- Tiempo de generación: 21-12-2022 a las 00:15:50
 -- Versión del servidor: 10.4.25-MariaDB
 -- Versión de PHP: 8.0.23
 
@@ -39,8 +39,8 @@ CREATE TABLE `categories` (
 --
 
 INSERT INTO `categories` (`id`, `name`, `created_at`, `updated_at`) VALUES
-(1, 'Electrodomestico', '2022-11-10 01:50:25', '2022-11-10 01:50:25'),
-(2, 'Electronica', '2022-11-10 01:50:25', '2022-11-10 01:50:25');
+(1, 'Electrodomestico', '2022-12-21 03:14:07', '2022-12-21 03:14:07'),
+(2, 'Electronica', '2022-12-21 03:14:07', '2022-12-21 03:14:07');
 
 -- --------------------------------------------------------
 
@@ -75,20 +75,21 @@ CREATE TABLE `migrations` (
 --
 
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
-(71, '2014_10_00_000000_create_settings_table', 1),
-(72, '2014_10_00_000001_add_group_column_on_settings_table', 1),
-(73, '2019_12_14_000001_create_personal_access_tokens_table', 1),
-(74, '2022_10_13_163407_create_users_table', 1),
-(75, '2022_10_13_163411_create_password_resets_table', 1),
-(76, '2022_10_13_163413_create_failed_jobs_table', 1),
-(77, '2022_10_13_163417_create_notifications_table', 1),
-(78, '2022_10_13_164147_create_permission_tables', 1),
-(79, '2022_10_14_140912_add_avatar_column_to_users_table', 1),
-(80, '2022_10_14_150108_create_suppliers_table', 1),
-(81, '2022_10_15_121758_create_categories_table', 1),
-(82, '2022_10_15_124140_create_purchases_table', 1),
-(83, '2022_10_15_150256_create_products_table', 1),
-(84, '2022_10_15_153409_create_sales_table', 1);
+(91, '2014_10_00_000000_create_settings_table', 1),
+(92, '2014_10_00_000001_add_group_column_on_settings_table', 1),
+(93, '2019_12_14_000001_create_personal_access_tokens_table', 1),
+(94, '2022_10_13_163407_create_users_table', 1),
+(95, '2022_10_13_163411_create_password_resets_table', 1),
+(96, '2022_10_13_163413_create_failed_jobs_table', 1),
+(97, '2022_10_13_163417_create_notifications_table', 1),
+(98, '2022_10_13_164147_create_permission_tables', 1),
+(99, '2022_10_14_140912_add_avatar_column_to_users_table', 1),
+(100, '2022_10_14_150108_create_suppliers_table', 1),
+(101, '2022_10_15_121758_create_categories_table', 1),
+(102, '2022_10_15_124140_create_purchases_table', 1),
+(103, '2022_10_15_150256_create_products_table', 1),
+(104, '2022_10_15_153409_create_sales_table', 1),
+(105, '2022_12_16_195001_create_deliveries_table', 1);
 
 -- --------------------------------------------------------
 
@@ -171,45 +172,46 @@ CREATE TABLE `permissions` (
 --
 
 INSERT INTO `permissions` (`id`, `name`, `guard_name`, `created_at`, `updated_at`) VALUES
-(1, 'view-sales', 'web', NULL, NULL),
-(2, 'create-sale', 'web', NULL, NULL),
-(3, 'destroy-sale', 'web', NULL, NULL),
-(4, 'edit-sale', 'web', NULL, NULL),
-(5, 'view-reports', 'web', NULL, NULL),
-(6, 'view-category', 'web', NULL, NULL),
-(7, 'create-category', 'web', NULL, NULL),
-(8, 'destroy-category', 'web', NULL, NULL),
-(9, 'edit-category', 'web', NULL, NULL),
-(10, 'view-products', 'web', NULL, NULL),
-(11, 'create-product', 'web', NULL, NULL),
-(12, 'edit-product', 'web', NULL, NULL),
-(13, 'destroy-product', 'web', NULL, NULL),
-(14, 'view-purchase', 'web', NULL, NULL),
-(15, 'create-purchase', 'web', NULL, NULL),
-(16, 'edit-purchase', 'web', NULL, NULL),
-(17, 'destroy-purchase', 'web', NULL, NULL),
-(18, 'view-supplier', 'web', NULL, NULL),
-(19, 'create-supplier', 'web', NULL, NULL),
-(20, 'edit-supplier', 'web', NULL, NULL),
-(21, 'destroy-supplier', 'web', NULL, NULL),
-(22, 'view-users', 'web', NULL, NULL),
-(23, 'create-user', 'web', NULL, NULL),
-(24, 'edit-user', 'web', NULL, NULL),
-(25, 'destroy-user', 'web', NULL, NULL),
-(26, 'view-access-control', 'web', NULL, NULL),
-(27, 'view-role', 'web', NULL, NULL),
-(28, 'edit-role', 'web', NULL, NULL),
-(29, 'destroy-role', 'web', NULL, NULL),
-(30, 'create-role', 'web', NULL, NULL),
-(31, 'view-permission', 'web', NULL, NULL),
-(32, 'create-permission', 'web', NULL, NULL),
-(33, 'edit-permission', 'web', NULL, NULL),
-(34, 'destroy-permission', 'web', NULL, NULL),
-(35, 'view-expired-products', 'web', NULL, NULL),
-(36, 'view-outstock-products', 'web', NULL, NULL),
-(37, 'backup-app', 'web', NULL, NULL),
-(38, 'backup-db', 'web', NULL, NULL),
-(39, 'view-settings', 'web', NULL, NULL);
+(1, 'view-deliveries', 'web', NULL, NULL),
+(2, 'view-sales', 'web', NULL, NULL),
+(3, 'create-sale', 'web', NULL, NULL),
+(4, 'destroy-sale', 'web', NULL, NULL),
+(5, 'edit-sale', 'web', NULL, NULL),
+(6, 'view-reports', 'web', NULL, NULL),
+(7, 'view-category', 'web', NULL, NULL),
+(8, 'create-category', 'web', NULL, NULL),
+(9, 'destroy-category', 'web', NULL, NULL),
+(10, 'edit-category', 'web', NULL, NULL),
+(11, 'view-products', 'web', NULL, NULL),
+(12, 'create-product', 'web', NULL, NULL),
+(13, 'edit-product', 'web', NULL, NULL),
+(14, 'destroy-product', 'web', NULL, NULL),
+(15, 'view-purchase', 'web', NULL, NULL),
+(16, 'create-purchase', 'web', NULL, NULL),
+(17, 'edit-purchase', 'web', NULL, NULL),
+(18, 'destroy-purchase', 'web', NULL, NULL),
+(19, 'view-supplier', 'web', NULL, NULL),
+(20, 'create-supplier', 'web', NULL, NULL),
+(21, 'edit-supplier', 'web', NULL, NULL),
+(22, 'destroy-supplier', 'web', NULL, NULL),
+(23, 'view-users', 'web', NULL, NULL),
+(24, 'create-user', 'web', NULL, NULL),
+(25, 'edit-user', 'web', NULL, NULL),
+(26, 'destroy-user', 'web', NULL, NULL),
+(27, 'view-access-control', 'web', NULL, NULL),
+(28, 'view-role', 'web', NULL, NULL),
+(29, 'edit-role', 'web', NULL, NULL),
+(30, 'destroy-role', 'web', NULL, NULL),
+(31, 'create-role', 'web', NULL, NULL),
+(32, 'view-permission', 'web', NULL, NULL),
+(33, 'create-permission', 'web', NULL, NULL),
+(34, 'edit-permission', 'web', NULL, NULL),
+(35, 'destroy-permission', 'web', NULL, NULL),
+(36, 'view-expired-products', 'web', NULL, NULL),
+(37, 'view-outstock-products', 'web', NULL, NULL),
+(38, 'backup-app', 'web', NULL, NULL),
+(39, 'backup-db', 'web', NULL, NULL),
+(40, 'view-settings', 'web', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -251,8 +253,8 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `purchase_id`, `price`, `discount`, `description`, `deleted_at`, `created_at`, `updated_at`) VALUES
-(1, 1, '20.00', '0.00', NULL, NULL, '2022-11-10 01:50:25', '2022-11-10 01:50:25'),
-(2, 2, '300.00', '0.00', NULL, NULL, '2022-11-10 01:50:25', '2022-11-10 01:50:25');
+(1, 1, '20.00', '0.00', NULL, NULL, '2022-12-21 03:14:07', '2022-12-21 03:14:07'),
+(2, 2, '300.00', '0.00', NULL, NULL, '2022-12-21 03:14:07', '2022-12-21 03:14:07');
 
 -- --------------------------------------------------------
 
@@ -278,8 +280,8 @@ CREATE TABLE `purchases` (
 --
 
 INSERT INTO `purchases` (`id`, `product`, `category_id`, `supplier_id`, `cost_price`, `quantity`, `expiry_date`, `image`, `created_at`, `updated_at`) VALUES
-(1, 'Batidora', 1, 1, '17.00', '400', NULL, NULL, '2022-11-10 01:50:25', '2022-11-10 01:50:25'),
-(2, 'Televisor', 2, 2, '280.00', '500', NULL, NULL, '2022-11-10 01:50:25', '2022-11-10 01:50:25');
+(1, 'Batidora', 1, 1, '17.00', '400', NULL, NULL, '2022-12-21 03:14:07', '2022-12-21 03:14:07'),
+(2, 'Televisor', 2, 2, '280.00', '500', NULL, NULL, '2022-12-21 03:14:07', '2022-12-21 03:14:07');
 
 -- --------------------------------------------------------
 
@@ -300,9 +302,9 @@ CREATE TABLE `roles` (
 --
 
 INSERT INTO `roles` (`id`, `name`, `guard_name`, `created_at`, `updated_at`) VALUES
-(1, 'cliente', 'web', '2022-11-10 01:50:24', '2022-11-10 01:50:24'),
-(2, 'oficial-de-despacho', 'web', '2022-11-10 01:50:24', '2022-11-10 01:50:24'),
-(3, 'super-admin', 'web', '2022-11-10 01:50:24', '2022-11-10 01:50:24');
+(1, 'cliente', 'web', '2022-12-21 03:14:07', '2022-12-21 03:14:07'),
+(2, 'oficial-de-despacho', 'web', '2022-12-21 03:14:07', '2022-12-21 03:14:07'),
+(3, 'super-admin', 'web', '2022-12-21 03:14:07', '2022-12-21 03:14:07');
 
 -- --------------------------------------------------------
 
@@ -320,22 +322,23 @@ CREATE TABLE `role_has_permissions` (
 --
 
 INSERT INTO `role_has_permissions` (`permission_id`, `role_id`) VALUES
-(1, 1),
 (1, 2),
 (1, 3),
 (2, 1),
 (2, 2),
 (2, 3),
+(3, 1),
+(3, 2),
 (3, 3),
 (4, 3),
-(5, 2),
 (5, 3),
+(6, 2),
 (6, 3),
 (7, 3),
 (8, 3),
 (9, 3),
-(10, 2),
 (10, 3),
+(11, 2),
 (11, 3),
 (12, 3),
 (13, 3),
@@ -364,7 +367,8 @@ INSERT INTO `role_has_permissions` (`permission_id`, `role_id`) VALUES
 (36, 3),
 (37, 3),
 (38, 3),
-(39, 3);
+(39, 3),
+(40, 3);
 
 -- --------------------------------------------------------
 
@@ -383,13 +387,6 @@ CREATE TABLE `sales` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Volcado de datos para la tabla `sales`
---
-
-INSERT INTO `sales` (`id`, `product_id`, `user_id`, `quantity`, `total_price`, `status`, `deleted_at`, `created_at`, `updated_at`) VALUES
-(1, 1, 1, 10, '200.00', 'Pendiente', NULL, '2022-11-10 01:50:25', '2022-11-10 01:50:25');
 
 -- --------------------------------------------------------
 
@@ -430,8 +427,8 @@ CREATE TABLE `suppliers` (
 --
 
 INSERT INTO `suppliers` (`id`, `name`, `email`, `phone`, `company`, `address`, `product`, `comment`, `created_at`, `updated_at`) VALUES
-(1, 'Bosch', NULL, NULL, NULL, NULL, NULL, NULL, '2022-11-10 01:50:25', '2022-11-10 01:50:25'),
-(2, 'LG', NULL, NULL, NULL, NULL, NULL, NULL, '2022-11-10 01:50:25', '2022-11-10 01:50:25');
+(1, 'Bosch', NULL, NULL, NULL, NULL, NULL, NULL, '2022-12-21 03:14:07', '2022-12-21 03:14:07'),
+(2, 'LG', NULL, NULL, NULL, NULL, NULL, NULL, '2022-12-21 03:14:07', '2022-12-21 03:14:07');
 
 -- --------------------------------------------------------
 
@@ -457,9 +454,9 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `location`, `remember_token`, `created_at`, `updated_at`, `avatar`) VALUES
-(1, 'Admin', 'admin@admin.com', NULL, '$2y$10$CH9gDPkei7R9LSS/JJokweH36Q0pWircgEigYjkp5CJ6bJ.EaD9Mi', 'Cochabamba', NULL, '2022-11-10 01:50:24', '2022-11-10 01:50:24', NULL),
-(2, 'Luis', 'luis@email.com', NULL, '$2y$10$lgkdCYZrVCbVDK9Ji/il/ujsOYhZfgRhQjvqcoytXwafuu4dlj9Ru', 'La Paz', NULL, '2022-11-10 01:50:24', '2022-11-10 01:50:24', NULL),
-(3, 'Juan', 'juan@email.com', NULL, '$2y$10$wzKnkM5w8ilHBZndCyOlVut4ix.KMxGXSfrTnbeouHx/0egJqX4zO', 'Oruro', NULL, '2022-11-10 01:50:25', '2022-11-10 01:50:25', NULL);
+(1, 'Admin', 'admin@admin.com', NULL, '$2y$10$40nXW7crMOBk/7ViV8PPC.cZFbIqiN825PT94FPp5kXSGlrx8bEOS', 'Cochabamba', NULL, '2022-12-21 03:14:07', '2022-12-21 03:14:07', NULL),
+(2, 'Luis', 'luis@email.com', NULL, '$2y$10$32A6McxUDOZafpXy4sjaHunLYO2QpznLZKfKqFWS5QnhOuAPWr8bG', 'La Paz', NULL, '2022-12-21 03:14:07', '2022-12-21 03:14:07', NULL),
+(3, 'Juan', 'juan@email.com', NULL, '$2y$10$dYa7bQqOnApfvDS24NyiWOQGrG0Ge4FmBVlCOMu2sz4VfJxiGEAFe', 'Oruro', NULL, '2022-12-21 03:14:07', '2022-12-21 03:14:07', NULL);
 
 --
 -- Índices para tablas volcadas
@@ -602,13 +599,13 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT de la tabla `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=85;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=106;
 
 --
 -- AUTO_INCREMENT de la tabla `permissions`
 --
 ALTER TABLE `permissions`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
 -- AUTO_INCREMENT de la tabla `personal_access_tokens`
@@ -638,7 +635,7 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT de la tabla `sales`
 --
 ALTER TABLE `sales`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `settings`
