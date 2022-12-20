@@ -14,14 +14,8 @@
 		<li class="breadcrumb-item active">Listado de Pedidos</li>
 	</ul>
 </div>
-<!--
-@can('create-sale')
-<div class="col-sm-5 col">
-	<a href="{{route('sales.create')}}" class="btn btn-primary float-right mt-2">Agregar Venta</a>
-</div>
-@endcan
 @endpush
--->
+
 @section('content')
 <div class="row">
 	<div class="col-md-12">
@@ -33,19 +27,11 @@
 					<table id="sales-table" class="datatable table table-hover table-center mb-0">
 						<thead>
 							<tr>
-							<!--	<th>Nombre Cliente<th>	-->
 								<th>Id</th>
 								<th>Producto</th>
 								<th>Cantidad de pedido</th>
 								<th>Precio Total</th>
-						<!--
-								<th>Estado Pedido</th>
-								<th>Fecha Emision</th>
-								<th>Fecha Despacho</th>
-						-->
-							<!--
-								<th class="action-btn">Accion</th>
-							-->
+						
 							</tr>
 						</thead>
 						<tbody>
@@ -73,14 +59,9 @@
             columns: [
                 {data: 'id', name: 'id'},
                 {data: 'product', name: 'product'},
-                //{data: 'user', name: 'user'},
-                //{data: 'location', name: 'location'},
                 {data: 'quantity', name: 'quantity'},
                 {data: 'total_price', name: 'total_price'},
-                //{data: 'status', name: 'status'},
-				//{data: 'date_up', name: 'date_up'},
-				//{data: 'date_down', name: 'date_down'},
-            //    {data: 'action', name: 'action', orderable: false, searchable: false},
+                
             ]
         });
         

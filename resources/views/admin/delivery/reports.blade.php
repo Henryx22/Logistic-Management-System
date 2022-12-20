@@ -25,11 +25,11 @@
 	<div class="col-md-12">
 	
 		@isset($deliveries)
-            <!--  Reporte de Ventas -->
+            <!--  Reporte de Procesado de pedidos -->
             <div class="card">
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table id="sales-table" class="datatable table table-hover table-center mb-0">
+                        <table id="deliveries-table" class="datatable table table-hover table-center mb-0">
                             <thead>
                                 <tr>
                                 	<th>Id</th>
@@ -44,27 +44,27 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($deliveries as $de)
-                                <!--    @if (!(empty($de->product->purchase)))	-->
+                                @foreach($deliveries as $delivery)
+                                    @if (!(empty($delivery)))	
                                         <tr>
-                                            <td>{{$de->id}}</td>
-                                            <td>{{$de->day}}</td>
-                                            <td>{{$de->time}}</td>
-                                            <td>{{$de->deliveriesPH}}</td>
-                                            <td>{{$de->quantityPH}}</td>
-                                            <td>{{$de->solvedPH}}</td>
-                                            <td>{{$de->progressPH}}</td>
-                                            <td>{{$de->workersPH}}</td>
+                                        	<td>{{$delivery->id}}</td>
+                                            <td>{{$delivery->day}}</td>
+                                            <td>{{$delivery->time}}</td>
+                                            <td>{{$delivery->deliveriesPH}}</td>
+                                            <td>{{$delivery->quantityPH}}</td>
+                                            <td>{{$delivery->solvedPH}}</td>
+                                            <td>{{$delivery->progressPH}}</td>
+                                            <td>{{$delivery->workersPH}}</td>
                                             
                                         </tr>
-                                <!--    @endif	-->
+                                    @endif	
                                 @endforeach
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
-            <!-- / Reporte de Ventas -->
+            <!-- / Reporte de procesado de pedidos -->
         @endisset
        
 		
@@ -84,26 +84,7 @@
 			<div class="modal-body">
 				<form method="post" action="{{route('delivery.report')}}">
 					@csrf
-				<!--	
-					<div class="row form-row">
-						<div class="col-12">
-							<div class="row">
-								<div class="col-6">
-									<div class="form-group">
-										<label>De </label>
-										<input type="date" name="from_date" class="form-control from_date">
-									</div>
-								</div>
-								<div class="col-6">
-									<div class="form-group">
-										<label>A </label>
-										<input type="date" name="to_date" class="form-control to_date">
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				-->
+				
 					<button type="submit" class="btn btn-primary btn-block submit_report">Enviar</button>
 				</form>
 			</div>

@@ -94,5 +94,5 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('genSale',[DeliveryController::class,'generateSales'])->name('genSale');
+Route::post('genSale',[DeliveryController::class,'generateSales'])->name('genSale');
 Route::get('procSale',[DeliveryController::class,'processDelivery'])->name('procSale');

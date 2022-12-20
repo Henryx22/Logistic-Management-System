@@ -18,196 +18,7 @@ use App\Http\Controllers\Admin\factory;
 
 class DeliveryController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     */
-    public function indexAux(Request $request)
-    {
-        $title = 'sales';
-        if($request->ajax()){
-            $sales = Sale::latest();
-            return DataTables::of($sales)
-                    ->addIndexColumn()
-                    ->addColumn('product',function($sale){
-                        $image = '';
-                        if(!empty($sale->product)){
-                            $image = null;
-                            if(!empty($sale->product->purchase->image)){
-                                $image = '<span class="avatar avatar-sm mr-2">
-                                <img class="avatar-img" src="'.asset("storage/purchases/".$sale->product->purchase->image).'" alt="image">
-                                </span>';
-                            }
-                            return $sale->product->purchase->product. ' ' . $image;
-                        }                 
-                    })
-                    ->addColumn('total_price',function($sale){                   
-                        return settings('app_currency','$').' '. $sale->total_price;
-                    })
-                    ->addColumn('date',function($row){
-                        return date_format(date_create($row->created_at),'d M, Y');
-                    })
-                    ->addColumn('action', function ($row) {
-                        $editbtn = '<a href="'.route("sales.edit", $row->id).'" class="editbtn"><button class="btn btn-primary"><i class="fas fa-edit"></i></button></a>';
-                        $deletebtn = '<a data-id="'.$row->id.'" data-route="'.route('sales.destroy', $row->id).'" href="javascript:void(0)" id="deletebtn"><button class="btn btn-danger"><i class="fas fa-trash"></i></button></a>';
-                        if (!auth()->user()->hasPermissionTo('edit-sale')) {
-                            $editbtn = '';
-                        }
-                        if (!auth()->user()->hasPermissionTo('destroy-sale')) {
-                            $deletebtn = '';
-                        }
-                        $btn = $editbtn.' '.$deletebtn;
-                        return $btn;
-                    })
-                    ->rawColumns(['product','action'])
-                    ->make(true);
-
-        }
-        $products = Product::get();
-        return view('admin.delivery.index',compact(
-            'title','products',
-        ));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        $title = 'create sales';
-        $products = Product::get();
-        return view('admin.sales.create',compact(
-            'title','products'
-        ));
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        $this->validate($request,[
-            'product'=>'required',
-            'quantity'=>'required|integer|min:1'
-        ]);
-        $sold_product = Product::find($request->product);
-        
-        /**update quantity of
-            sold item from
-         purchases
-        **/
-        $purchased_item = Purchase::find($sold_product->purchase->id);
-        $new_quantity = ($purchased_item->quantity) - ($request->quantity);
-        $notification = '';
-        if (!($new_quantity < 0)){
-
-            $purchased_item->update([
-                'quantity'=>$new_quantity,
-            ]);
-
-            /**
-             * calcualting item's total price
-            **/
-            $total_price = ($request->quantity) * ($sold_product->price);
-            Sale::create([
-                'product_id'=>$request->product,
-                'quantity'=>$request->quantity,
-                'total_price'=>$total_price,
-                'status'=>"Pendiente",
-            ]);
-
-            $notification = notify("Product has been sold");
-        } 
-        if($new_quantity <=1 && $new_quantity !=0){
-            // send notification 
-            $product = Purchase::where('quantity', '<=', 1)->first();
-            event(new PurchaseOutStock($product));
-            // end of notification 
-            $notification = notify("Product is running out of stock!!!");
-            
-        }
-
-        return redirect()->route('sales.index')->with($notification);
-    }
-
     
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \app\Models\Sale $sale
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Sale $sale)
-    {
-        $title = 'edit sale';
-        $products = Product::get();
-        return view('admin.sales.edit',compact(
-            'title','sale','products'
-        ));
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \app\Models\Sale $sale
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Sale $sale)
-    {
-        $this->validate($request,[
-            'product'=>'required',
-            'quantity'=>'required|integer|min:1'
-        ]);
-        $sold_product = Product::find($request->product);
-        /**
-         * update quantity of sold item from purchases
-        **/
-        $purchased_item = Purchase::find($sold_product->purchase->id);
-        if(!empty($request->quantity)){
-            $new_quantity = ($purchased_item->quantity) - ($request->quantity);
-        }
-        $new_quantity = $sale->quantity;
-        $notification = '';
-        if (!($new_quantity < 0)){
-            $purchased_item->update([
-                'quantity'=>$new_quantity,
-            ]);
-
-            /**
-             * calcualting item's total price
-            **/
-            if(!empty($request->quantity)){
-                $total_price = ($request->quantity) * ($sold_product->price);
-            }
-            $total_price = $sale->total_price;
-            $sale->update([
-                'product_id'=>$request->product,
-                'quantity'=>$request->quantity,
-                'total_price'=>$total_price,
-            ]);
-
-            $notification = notify("Product has been updated");
-        } 
-        if($new_quantity <=1 && $new_quantity !=0){
-            // send notification 
-            $product = Purchase::where('quantity', '<=', 1)->first();
-            event(new PurchaseOutStock($product));
-            // end of notification 
-            $notification = notify("Product is running out of stock!!!");
-            
-        }
-        return redirect()->route('sales.index')->with($notification);
-    }
-
     /**
      * Generate sales reports index
      *
@@ -227,12 +38,10 @@ class DeliveryController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function generateReport(Request $request){
-        /**
+    
         $this->validate($request,[
-            'from_date' => 'required',
-            'to_date' => 'required',
         ]);
-        */
+        
         $title = 'deliveries reports';
         $deliveries = Delivery::get();
         return view('admin.delivery.reports',compact(
@@ -274,23 +83,6 @@ class DeliveryController extends Controller
                             return $sale->product->purchase->product. ' ' . $image;
                         }                 
                     })
-                    /**
-                    ->addColumn('user',function($sale){
-                        //$idUser = $sale->user_id;
-                        //$user = User::where('id', '<=', $sale->user_id)->first();
-                        $user = DB::table('users')->where('id', $sale->user_id);
-
-                        return ''.$user->name;
-                    })
-                    */
-                /**
-                    ->addColumn('location',function($sale){
-                        $idUser = $sale->user_id;
-                        $user = DB::select('select * from users where id = :id', ['id' => $idUser]);
-                        
-                        return $user->location;
-                    })
-                    */
                     
                     ->addColumn('total_price',function($sale){                   
                         return settings('app_currency','$').' '. $sale->total_price;
@@ -327,7 +119,7 @@ class DeliveryController extends Controller
 
     public function indexProcessed(Request $request)
     {
-        //processDelivery();
+        app(DeliveryController::class)->processDeliv($request);
 
         $title = 'deliveries';
         if($request->ajax()){
@@ -374,34 +166,19 @@ class DeliveryController extends Controller
 
     public function generateSales(Request $request)
     {
-
-        /**
-    
-    $user = \App\Models\User::factory()->create();
-        \App\Models\Course::factory()->count(5)->create(['user_id' => $user->id ])->each(function ($course) {
-            \App\Models\Episode::factory()->count(rand(6 , 20))->make()->each(function ($episode , $key) use ($course){
-                $episode->number = $key +1;
-                $course->episodes()->save($episode);
-            });
-        });
-*/
-        //$new_user = factory(App\User::class)->create();
-        //$new_sale = factory(App\Sale::class)->create(1);
-//        Sale::factory()->count(1)->create();
-        \App\Models\Sale::factory()->count(24)->create();
+        $this->validate($request,[
+            'numDays'=>'required',
+        ]);
+        $aux=($request->numDays)*24;
+        \App\Models\Sale::factory()->count($aux)->create();
 
         return view('welcome');
     }
         
-    public function processDelivery(Request $request)
+    public function processDeliv(Request $request)
     {
         Delivery::truncate();
-/**
-        foreach(Delivery::all() as $d){
-            $d->delete();
-            echo $d;
-        }
-*/
+
         $aux;
         $day=1;
         $hr=8;
@@ -416,20 +193,10 @@ class DeliveryController extends Controller
         $prog=0;  //$progressPH;   
         $sales = Sale::get();
 
-    //$np = ($cpr+$ci)/$cmt;
-
         $i=1;
             foreach ($sales as $sale) {
                 $cph = $sale->quantity;
             
-            /**    
-                echo $day;
-                echo "\n\n";
-                echo $i;
-                echo "\n\n";
-                echo $cph;
-            */    
-    
                 //si hora entre 01 a 04
                 if($i<5){
                     $prog=$prog+$cph;
@@ -547,7 +314,7 @@ class DeliveryController extends Controller
                                                         $hr=3;
                                                         $aux = ($prog + $ci)/$hr;
                                                                 
-                                                        $np = floor($aux/$cmt);   //parte entera division
+                                                        $np = floor($aux/$cmt);   //parte entera inferior
                                                                 
                                                     }    
                                                 }
@@ -576,16 +343,6 @@ class DeliveryController extends Controller
                     }
                 }
 
-            /**    
-                echo "\n\n";
-                echo $ci;
-                echo "\n\n";
-                echo $cpr;
-                echo "\n\n";
-                echo $prog;
-                echo "\n\n";
-                echo $np;
-            */
             $dayText="";
 
             if($day==1){
@@ -643,6 +400,14 @@ class DeliveryController extends Controller
                 }                
         }
         
-        return view('welcome');
+        
     }
+
+    public function processDelivery(Request $request)
+    {
+        app(DeliveryController::class)->processDeliv($request);
+        return view('welcome');
+    }    
 }
+
+

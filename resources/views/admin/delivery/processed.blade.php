@@ -14,19 +14,12 @@
 		<li class="breadcrumb-item active">Procesado de Pedidos</li>
 	</ul>
 </div>
-<!--
-@can('create-sale')
-<div class="col-sm-5 col">
-	<a href="{{route('sales.create')}}" class="btn btn-primary float-right mt-2">Agregar Venta</a>
-</div>
-@endcan
 @endpush
--->
 @section('content')
 <div class="row">
 	<div class="col-md-12">
 	
-		<!--  Delivery -->
+		<!--  Pedido Procesado -->
 		<div class="card">
 			<div class="card-body">
 				<div class="table-responsive">
@@ -51,7 +44,7 @@
 				</div>
 			</div>
 		</div>
-		<!-- / delivery -->
+		<!-- / Pedido Procesado-->
 		
 	</div>
 </div>
