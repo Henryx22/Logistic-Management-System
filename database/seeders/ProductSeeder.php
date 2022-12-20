@@ -68,7 +68,7 @@ class ProductSeeder extends Seeder
             'price' => 300,
         ]);        
 
-
+/**
 		$sale1 = Sale::create([
     		'id' => 1,
             'product_id' => 1,
@@ -77,5 +77,6 @@ class ProductSeeder extends Seeder
             'total_price' => 200,
             'status' => "Pendiente",
         ]);
+*/
     }
 }

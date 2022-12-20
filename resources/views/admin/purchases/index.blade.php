@@ -36,7 +36,7 @@
 								<th>Precio de Compra</th>
 								<th>Cantidad</th>
 							<!--	<th>Expire Date</th>	-->
-								<th class="action-btn">Action</th>
+								<th class="action-btn">Accion</th>
 							</tr>
 						</thead>
 						<tbody>

@@ -11,6 +11,44 @@
 					<a href="{{route('dashboard')}}"><i class="fe fe-home"></i> <span>Panel de Control</span></a>
 				</li>
 				
+				@can('view-deliveries')
+				<li class="submenu">
+					<a href="#"><i class="fe fe-activity"></i> <span> Entregas</span> <span class="menu-arrow"></span></a>
+					<ul style="display: none;">
+						<li><a class="{{ route_is('delivery.index') ? 'active' : '' }}" href="{{route('delivery.index')}}">Lista de Pedidos</a></li>
+					</ul>
+					<ul style="display: none;">
+						<li><a class="{{ route_is('delivery.processed') ? 'active' : '' }}" href="{{route('delivery.processed')}}">Procesamiento de Pedidos</a></li>
+					</ul>
+					<ul style="display: none;">
+						<li><a class="{{ route_is('delivery.*') ? 'active' : '' }}" href="{{route('delivery.index')}}">Reporte de Procesamiento</a></li>
+					</ul>
+				</li>
+				@endcan
+				
+				@can('view-sales')
+				<li class="submenu">
+					<a href="#"><i class="fe fe-activity"></i> <span> Ventas</span> <span class="menu-arrow"></span></a>
+					<ul style="display: none;">
+						<li><a class="{{ route_is('sales.*') ? 'active' : '' }}" href="{{route('sales.index')}}">Lista de Ventas</a></li>
+						@can('create-sale')
+						<li><a class="{{ route_is('sales.create') ? 'active' : '' }}" href="{{route('sales.create')}}">Agregar Venta</a></li>
+						@endcan
+					</ul>
+				</li>
+				@endcan
+				
+				@can('view-reports')
+				<li class="submenu">
+					<a href="#"><i class="fe fe-document"></i> <span> Reportes</span> <span class="menu-arrow"></span></a>
+					<ul style="display: none;">
+						<li><a class="{{ route_is('sales.report') ? 'active' : '' }}" href="{{route('sales.report')}}">Reporte de Ventas</a></li>
+						<li><a class="{{ route_is('purchases.report') ? 'active' : '' }}" href="{{route('purchases.report')}}">Reporte de Compras</a></li>
+					</ul>
+				</li>
+				@endcan
+
+				
 				@can('view-category')
 				<li class="{{ route_is('categories.*') ? 'active' : '' }}"> 
 					<a href="{{route('categories.index')}}"><i class="fe fe-layout"></i> <span>Categorias</span></a>
@@ -42,17 +80,6 @@
 					</ul>
 				</li>
 				@endcan
-				@can('view-sales')
-				<li class="submenu">
-					<a href="#"><i class="fe fe-activity"></i> <span> Ventas</span> <span class="menu-arrow"></span></a>
-					<ul style="display: none;">
-						<li><a class="{{ route_is('sales.*') ? 'active' : '' }}" href="{{route('sales.index')}}">Lista de Ventas</a></li>
-						@can('create-sale')
-						<li><a class="{{ route_is('sales.create') ? 'active' : '' }}" href="{{route('sales.create')}}">Agregar Venta</a></li>
-						@endcan
-					</ul>
-				</li>
-				@endcan
 				
 				@can('view-supplier')
 				<li class="submenu">
@@ -60,16 +87,6 @@
 					<ul style="display: none;">
 						<li><a class="{{ route_is('suppliers.*') ? 'active' : '' }}" href="{{route('suppliers.index')}}">Lista de Proveedores</a></li>
 						@can('create-supplier')<li><a class="{{ route_is('suppliers.create') ? 'active' : '' }}" href="{{route('suppliers.create')}}">Agregar Proveedores</a></li>@endcan
-					</ul>
-				</li>
-				@endcan
-
-				@can('view-reports')
-				<li class="submenu">
-					<a href="#"><i class="fe fe-document"></i> <span> Reportes</span> <span class="menu-arrow"></span></a>
-					<ul style="display: none;">
-						<li><a class="{{ route_is('sales.report') ? 'active' : '' }}" href="{{route('sales.report')}}">Reporte de Ventas</a></li>
-						<li><a class="{{ route_is('purchases.report') ? 'active' : '' }}" href="{{route('purchases.report')}}">Reporte de Compras</a></li>
 					</ul>
 				</li>
 				@endcan

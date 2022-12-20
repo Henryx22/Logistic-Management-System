@@ -11,7 +11,7 @@
 	<h3 class="page-title">Pedidos</h3>
 	<ul class="breadcrumb">
 		<li class="breadcrumb-item"><a href="{{route('dashboard')}}">Panel de Control</a></li>
-		<li class="breadcrumb-item active">Pedidos</li>
+		<li class="breadcrumb-item active">Procesado de Pedidos</li>
 	</ul>
 </div>
 <!--
@@ -33,18 +33,14 @@
 					<table id="sales-table" class="datatable table table-hover table-center mb-0">
 						<thead>
 							<tr>
-							<!--	<th>Nombre Cliente<th>	-->
-								<th>Producto</th>
-								<th>Cantidad de pedido</th>
-								<th>Precio Total</th>
-						<!--
-								<th>Estado Pedido</th>
-								<th>Fecha Emision</th>
-								<th>Fecha Despacho</th>
-						-->
-							<!--
-								<th class="action-btn">Accion</th>
-							-->
+								<th>Dia</th>
+								<th>Hora</th>
+								<th>Pedidos x Hora</th>
+								<th>Cantidad x Hora</th>
+								<th>Procesado x Hora</th>
+								<th>Avance</th>
+								<th>Trabajadores x Hora</th>
+
 							</tr>
 						</thead>
 						<tbody>
@@ -68,17 +64,16 @@
         var table = $('#sales-table').DataTable({
             processing: true,
             serverSide: true,
-            ajax: "{{route('delivery.index')}}",
+            ajax: "{{route('delivery.processed')}}",
             columns: [
-                {data: 'product', name: 'product'},
-                //{data: 'user', name: 'user'},
-                //{data: 'location', name: 'location'},
-                {data: 'quantity', name: 'quantity'},
-                {data: 'total_price', name: 'total_price'},
-                //{data: 'status', name: 'status'},
-				//{data: 'date_up', name: 'date_up'},
-				//{data: 'date_down', name: 'date_down'},
-            //    {data: 'action', name: 'action', orderable: false, searchable: false},
+                {data: 'day', name: 'day'},
+                {data: 'time', name: 'time'},
+                {data: 'deliveriesPH', name: 'deliveriesPH'},
+                {data: 'quantityPH', name: 'quantityPH'},
+                {data: 'solvedPH', name: 'solvedPH'},
+                {data: 'progressPH', name: 'progressPH'},
+                {data: 'workersPH', name: 'workersPH'},
+
             ]
         });
         

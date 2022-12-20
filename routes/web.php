@@ -18,6 +18,7 @@ use App\Http\Controllers\Admin\PurchaseController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\SaleController;
 use App\Http\Controllers\Admin\SupplierController;
+use App\Http\Controllers\Admin\DeliveryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -55,6 +56,13 @@ Route::middleware(['auth'])->prefix('admin')->group(function(){
     Route::resource('sales',SaleController::class)->except('show');
     Route::get('sales/reports',[SaleController::class,'reports'])->name('sales.report');
     Route::post('sales/reports',[SaleController::class,'generateReport']);
+    
+    Route::get('delivery/index',[DeliveryController::class,'index'])->name('delivery.index');
+    Route::get('delivery/processed',[DeliveryController::class,'indexProcessed'])->name('delivery.processed');
+    //Route::get('delivery/reports',[DeliveryController::class,'index'])->name('delivery.report');
+    //Route::get('genSale',[DeliveryController::class,'generateSales'])->name('genSale');
+
+
 
     Route::get('backup', [BackupController::class,'index'])->name('backup.index');
     Route::put('backup/create', [BackupController::class,'create'])->name('backup.store');
@@ -77,8 +85,13 @@ Route::middleware(['guest'])->prefix('admin')->group(function () {
     Route::post('forgot-password',[ForgotPasswordController::class,'requestEmail']);
     Route::get('reset-password/{token}',[ResetPasswordController::class,'index'])->name('password.reset');
     Route::post('reset-password',[ResetPasswordController::class,'resetPassword'])->name('password.update');
-});
+
+
+    });
 
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('genSale',[DeliveryController::class,'generateSales'])->name('genSale');
+Route::get('procSale',[DeliveryController::class,'processDelivery'])->name('procSale');

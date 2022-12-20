@@ -35,7 +35,7 @@
 								<th>Precio</th>
 								<th>Cantidad</th>
 								<th>Descuento</th>
-								<th>Fecha Expiracion</th>
+								<!--	<th>Fecha Expiracion</th>	-->
 								<th class="action-btn">Accion</th>
 							</tr>
 						</thead>
@@ -67,7 +67,7 @@
                 {data: 'price', name: 'price'},
                 {data: 'quantity', name: 'quantity'},
                 {data: 'discount', name: 'discount'},
-				{data: 'expiry_date', name: 'expiry_date'},
+				//	{data: 'expiry_date', name: 'expiry_date'},
                 {data: 'action', name: 'action', orderable: false, searchable: false},
             ]
         });
