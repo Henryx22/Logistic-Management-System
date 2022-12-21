@@ -117,14 +117,7 @@
 					<a href="{{route('backup.index')}}"><i class="material-icons">backup</i> <span>Backups</span></a>
 				</li>
 			-->
-				@can('view-settings')
-				<li class="{{ route_is('settings') ? 'active' : '' }}"> 
-					<a href="{{route('settings')}}">
-						<i class="material-icons">Ajustes</i>
-						 <span> Ajustes</span>
-					</a>
-				</li>
-				@endcan
+				
 			</ul>
 		</div>
 	</div>
